@@ -1,6 +1,5 @@
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const sessionUser = require("../model/sessionUser")
 
 module.exports = function (passport) {
 
@@ -8,7 +7,7 @@ module.exports = function (passport) {
         {
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: `${process.env.APP_URL}/auth/google/callback`
+            callbackURL: "https://trailer-box.herokuapp.com/api/auth/google/callback",
         },
         async (accessToken, refreshToken, profile, done) => {
 
