@@ -32,7 +32,7 @@ app.use(session({
     secret: "pussycat",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 * 2, httpOnly: true, secure: IS_PRODUCTION },
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 2, httpOnly: true, secure: IS_PRODUCTION, sameSite: "none" },
     store: MongoStore.create({
         mongoUrl: process.env.MONGO_URI,
         autoRemove: 'native',
