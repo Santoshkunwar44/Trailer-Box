@@ -54,7 +54,7 @@ router.get('/google/callback',
 
         console.log("set session inside the call back ", req.session.user)
         // Successful authentication, redirect home.
-        // res.redirect('http://localhost:3000/');
+        res.redirect('http://localhost:3000/');
     });
 
 
