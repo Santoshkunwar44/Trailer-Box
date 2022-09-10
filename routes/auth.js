@@ -46,14 +46,15 @@ router.get('/google',
 router.get('/google/callback',
     passport.authenticate('google', { failureRedirect: 'http://localhost:3000/' }),
     function (req, res) {
-        console.log("the google call back route :", req.user)
         req.session.user = {
             userCredentials: {
                 ...req.user, lastLoggedInAt: new Date().getTime(), loginMethod: "google"
             }
         }
+
+        console.log("set session inside the call back ", req.session.user)
         // Successful authentication, redirect home.
-        res.redirect('http://localhost:3000/');
+        // res.redirect('http://localhost:3000/');
     });
 
 
