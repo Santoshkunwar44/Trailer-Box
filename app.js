@@ -3,6 +3,7 @@ const express = require("express")
 const dotenv = require("dotenv")
 const app = express()
 dotenv.config({ path: "./config/config.env" })
+const cookieParser = require("cookie-parser")
 const morgan = require("morgan")
 const passport = require("passport")
 const session = require("express-session")
@@ -17,17 +18,21 @@ const mongoDb = require("./config/database")
 const authRoute = require("./routes/auth")
 const userRoute = require("./routes/user")
 
+const IS_PRODUCTION = process.env.NODE_ENV === 'production'
+
 
 mongoDb()
 //  middlewares  
 app.use(morgan("dev"))
 // app.use(cookieParser())
+app.use(cookieParser())
 require("./config/passport")(passport)
 app.use(session({
-    secret: process.env.session_secret,
+    name: "trailerBox.sid",
+    secret: "pussycat",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 * 2, httpOnly: true },
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 2, httpOnly: true, secure: IS_PRODUCTION },
     store: MongoStore.create({
         mongoUrl: process.env.MONGO_URI,
         autoRemove: 'native',
@@ -62,5 +67,5 @@ app.use("/api/user", userRoute)
 
 // load config
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 8080
 app.listen(PORT, () => console.log(`Server running in  at port ${PORT}`))

@@ -7,7 +7,7 @@ const router = require("express").Router()
 
 router.get("/login/success", (req, res) => {
 
-    console.log("the passport session : ", req.user)
+    console.log("the passport session : ", req.user, req.session)
 
     if (!req.user && !req.session.user) {
         req.session.user = {
@@ -77,6 +77,8 @@ router.post("/login", async (req, res) => {
                 req.session.user = {
                     userCredentials: { ...others, loginMethod: "app" }
                 }
+
+                console.log("your saved session ", req.session)
                 return res.status(200).json({ message: { ...req.session.user.userCredentials, token, new: true }, success: true })
 
             } else {
