@@ -36,6 +36,7 @@ module.exports = function (passport) {
     //  desirializing  the user means asking for all the user credentails through the userid and putting it to the req.user object 
     // req.user ={ all the user credentails } is obtained through it
     passport.deserializeUser(function (user, done) {
+        console.log("the user in the deserialize :", user)
         done(null, user);
     });
 
