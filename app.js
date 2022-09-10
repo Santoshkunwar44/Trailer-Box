@@ -10,6 +10,16 @@ const session = require("express-session")
 const MongoStore = require("connect-mongo")
 const cors = require("cors")
 
+app.use(cors({
+    origin: "http://localhost:3000",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true
+}
+))
+
+app.set("trust proxy", 1)
+
+
 
 
 const mongoDb = require("./config/database")
@@ -32,7 +42,12 @@ app.use(session({
     secret: "pussycat",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 * 2, httpOnly: true, secure: true, sameSite: "none" },
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 2,
+        httpOnly: true,
+        secure: true,
+        sameSite: "none"
+    },
     store: MongoStore.create({
         mongoUrl: process.env.MONGO_URI,
         autoRemove: 'native',
@@ -51,13 +66,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-app.use(cors({
-    origin: "http://localhost:3000",
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true
-}
-))
-
 
 
 // routes 
