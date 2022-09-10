@@ -7,6 +7,8 @@ const router = require("express").Router()
 
 router.get("/login/success", (req, res) => {
 
+    console.log("the passport session : ", req.user)
+
     if (!req.user && !req.session.user) {
         req.session.user = {
             userCredentials: { lastLoggedInAt: new Date().getTime(), new: true }
